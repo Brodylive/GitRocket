@@ -16,9 +16,7 @@ if [[ ! -f "$GITROCKET_SCRIPT" ]]; then
 
     if [[ $(basename $0) != "gitrocket" ]]; then
         echo -e "\tDownloading"
-        curl -sS -o ${GITROCKET_SCRIPT} ${GITROCKET_URL}
         git clone ${GITROCKET_URL_SRC} .
-        mkdir
     else
         echo -e "\tLocal install"
         cp $0 ${GITROCKET_SCRIPT}
