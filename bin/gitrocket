@@ -67,14 +67,14 @@ clone()
 {
   echo -ne "\n\t\033[0;37m☄💫 uri git ➣ $COLOR_NONE"
   read uri
-  echo -e "\n $COLOR_DARK_GRAY Clone ... $COLOR_NONE"
+  echo -e "\n $COLOR_DARK_GRAY Cloning repository... $COLOR_NONE\n"
 
-  git clone $uri $1 || {
+  git clone ${uri} $1 || {
     error "$ERROR_CLONE"
     return 1
   } 
 
-  echo -e " $COLOR_DARK_GRAY ... finished! $COLOR_NONE"
+  echo -e "\n $COLOR_DARK_GRAY Cloning done. $COLOR_NONE"
 
   cd "$1" || {
     error "$ERROR_CD"
@@ -119,13 +119,15 @@ clone()
 
 initCommit()
 {
-  (touch README.md && git add README.md && git commit -m ":tada: Initial Commit with GitRocket :rocket:" && git push -u origin master) || {
+  git_init=$(touch README.md && git add README.md && git commit -m ":tada: Initial Commit with GitRocket :rocket:" && git push -u origin master)
+  if [[ ${git_init} =~ "set up to track remote branch" ]]; then
+    success "${SUCCESS_INIT}"
+    return 0
+  else
+      echo "\n $RED NEW INIT ERROR :: ${git_init} :: $COLOR_NONE"
       error "$ERROR_INIT"
       return 1
-  }
-  success "${SUCCESS_INIT}"
-
-  return 0
+  fi
 }
 
 function before_commit(){
