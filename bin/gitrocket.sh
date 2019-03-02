@@ -37,23 +37,23 @@ fi
 
 ##################################################################
 # COLORS
-source "${BASH_SOURCE%/*}/GitRocket/assets/colors.sh" || source GitRocket/assets/colors.sh
+source "${BASH_SOURCE%/*}/src/assets/colors.sh" || source src/assets/colors.sh
 
 ##################################################################
 # ERRORS & SUCCESS VARS
-source "${BASH_SOURCE%/*}/GitRocket/assets/flags.sh" || source GitRocket/assets/flags.sh
+source "${BASH_SOURCE%/*}/src/assets/flags.sh" || source src/assets/flags.sh
 
 ##################################################################
 # DISPLAY (Help, Version, Header)
-source "${BASH_SOURCE%/*}/GitRocket/display.sh" || source GitRocket/display.sh
+source "${BASH_SOURCE%/*}/src/display.sh" || source src/display.sh
 
 ##################################################################
 # SELECT
-source "${BASH_SOURCE%/*}/GitRocket/select.sh" || source GitRocket/select.sh
+source "${BASH_SOURCE%/*}/src/select.sh" || source src/select.sh
 
 ##################################################################
 # MESSENGER
-source "${BASH_SOURCE%/*}/GitRocket/messenger.sh" || source GitRocket/messenger.sh
+source "${BASH_SOURCE%/*}/src/messenger.sh" || source src/messenger.sh
 
 
 
