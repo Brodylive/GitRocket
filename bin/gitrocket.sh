@@ -151,8 +151,11 @@ function before_commit(){
   if [[ ${git_status} =~  "publish your local commits" ]]; then
     # SOMETHING TO PUSH
     echo -en "\n $COLOR_DARK_GRAY Preparing to publish your lasts commits. $COLOR_NONE"
-    pull
-    pullandpush # DO
+    pull || {
+        error ${ERROR_PULL}
+        return 1
+    }
+    push && success ${SUCCESS_PUSH} || return 1
     return 1
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
