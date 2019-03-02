@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GITROCKET_URL="https://raw.githubusercontent.com/krkn/sote/master/bin/sote"
+GITROCKET_URL="https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket.sh"
 GITROCKET_PATH="$HOME/.gitrocket/bin"
 GITROCKET_SCRIPT="$GITROCKET_PATH/gitrocket"
 
