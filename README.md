@@ -8,8 +8,8 @@
     
 ### Install with curl
 
-    curl -sS https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket.sh | bash
+    curl -sS https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket | bash
 
 ### Install with wget
 
-    wget -q -O - https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket.sh | bash
+    wget -q -O - https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket | bash
