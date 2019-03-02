@@ -2,7 +2,7 @@
 
 GITROCKET_URL="https://raw.githubusercontent.com/Brodylive/GitRocket/master/bin/gitrocket"
 GITROCKET_URL_SRC="https://github.com/Brodylive/GitRocket.git"
-GITROCKET_PATH="$HOME/.gitrocket/bin"
+GITROCKET_PATH="$HOME/.gitrocket/"
 GITROCKET_SCRIPT="$GITROCKET_PATH/gitrocket"
 GITROCKET_SRC="$GITROCKET_PATH/src/*"
 
