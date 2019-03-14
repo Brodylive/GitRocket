@@ -35,6 +35,7 @@ done
 if [[ -f ${FILE} ]]; then
     echo -e "\tAdd GitRocket to your $FILE"
     echo "source $GITROCKET_SCRIPT" >> ${FILE}
+    return 0
 fi
 
 
