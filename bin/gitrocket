@@ -228,7 +228,7 @@ function write_message() {
         PRETTYMSG="$prettyEmoji $label"
     fi
 
-    echo -en "\n $WHITE ☞ $RED_ON_WHITE $PRETTYMSG $CYAN OK? [y/n] $COLOR_NONE"
+    echo -en "\n $RED ☞  $WHITE_ON_GREY $PRETTYMSG $CYAN OK? [y/n] $COLOR_NONE"
     read proceeded
 
     case "$proceeded" in
