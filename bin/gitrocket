@@ -224,11 +224,17 @@ function write_message() {
         echo -en "\n \033[0;37m ✎ Label du commit ➣ $COLOR_NONE"
         read label
         # $selectedEmoji from SELECT
-        MESSAGE="$selectedEmoji $label"
-        PRETTYMSG="$prettyEmoji $label"
+        if [[ -z $selectedEmoji ]]; then
+          MESSAGE="$label"
+          PRETTYMSG="$label"
+        else
+          MESSAGE="$selectedEmoji $label"
+          PRETTYMSG="$prettyEmoji $label"
+        fi
+        
     fi
 
-    echo -en "\n $RED ☞  $WHITE_ON_GREY $PRETTYMSG $CYAN OK? [y/n] $COLOR_NONE"
+    echo -en "\n $COLOR_LIGHT_RED ☞  $WHITE_ON_GREY $PRETTYMSG $CYAN OK? [y/n] $COLOR_NONE"
     read proceeded
 
     case "$proceeded" in
@@ -297,7 +303,7 @@ function stash(){
     git_stash=$(git stash)
     pull || return 1
     git_stash=$(git stash pop)
-    echo -en "\n $COLOR_DARK_GRAY Stash apply! $COLOR_NONE"
+    echo -en " $COLOR_DARK_GRAY Stash apply! $COLOR_NONE\n"
     return 0
 }
 
