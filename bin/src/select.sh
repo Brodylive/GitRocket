@@ -39,7 +39,8 @@ function selectEmoji()
     echo -e "\t\t\t 22 👽$COLOR_DARK_THIN_GREEN Updating code due to external API changes$COLOR_NONE"
     echo -en "\t 23 👌$COLOR_DARK_THIN_GREEN Updating code due to code review changes$COLOR_NONE"
     echo -e "\t 24 🏗 $COLOR_DARK_THIN_GREEN Making architectural changes$COLOR_NONE"
-    echo -e "\t 25 🚀$COLOR_DARK_THIN_GREEN Deploying stuff$COLOR_NONE"
+    echo -en "\t 25 🚀$COLOR_DARK_THIN_GREEN Deploying stuff$COLOR_NONE"
+    echo -e "\t\t\t\t 26 📦$COLOR_DARK_THIN_GREEN Updating compiled files or packages$COLOR_NONE"
 
     echo -e "\t x \033[0;2mNone$COLOR_NONE"
 
@@ -170,6 +171,11 @@ function selectEmoji()
       25 )
         selectedEmoji=":rocket:"
         prettyEmoji='🚀'
+        return 0
+        ;;
+      26 )
+        selectedEmoji=":package:"
+        prettyEmoji='📦'
         return 0
         ;;
       x )
