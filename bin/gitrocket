@@ -39,6 +39,8 @@ if [[ -f ${FILE} ]]; then
 fi
 
 
+
+
 ##################################################################
 # COLORS
 source "${BASH_SOURCE%/*}/src/assets/colors.sh" || source src/assets/colors.sh
@@ -65,7 +67,15 @@ source "${BASH_SOURCE%/*}/src/messenger.sh" || source src/messenger.sh
 ##################################################################
 # MODULES
 
-
+function updateGit() {
+   pushd . &>/dev/null
+   echo -e "\n $COLOR_DARK_GRAY Changing directory $COLOR_NONE"
+   cd $GITROCKET_PATH
+   echo -e "\n $COLOR_DARK_GRAY Pulling sources $COLOR_NONE"
+   pull
+   echo -e "\n $COLOR_DARK_GRAY Pop to previous directory $COLOR_NONE"
+   popd &>/dev/null
+}
 
 clone()
 {
@@ -386,6 +396,10 @@ GitRocket()
       rocket "agree" && success "$SUCCESS_PUSH"
       return 0
       ;;
+    update)
+       updateGit
+       return 0
+       ;;
     *)
     # HELP
       help
