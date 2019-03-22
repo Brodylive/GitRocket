@@ -8,7 +8,7 @@ source "${BASH_SOURCE%/*}/assets/colors.sh" || source assets/colors.sh
 ##################################################################
 # VERSION
 
-VERSION="0.8"
+VERSION="0.9"
 
 function version() {
     echo -e "$COLOR_DARK_ORANGE  Version $ORANGE $VERSION $COLOR_NONE"
@@ -22,7 +22,7 @@ function help()
 {
     echo -e "$COLOR_DARK_ORANGE  Version $ORANGE $VERSION $COLOR_NONE"
 
-    echo -e "\n  📙 $ORANGE Usage     $WHITE GitRocket $GREEN<options> $CYAN[name]$COLOR_NONE\n"
+    echo -e "\n  📙$ORANGE Usage      $WHITE GitRocket $GREEN<options> $CYAN[name]$COLOR_NONE\n"
     echo -e "\t$COLOR_GREEN_UNDERLINED  Options  $COLOR_NONE"
 
     echo -e "\t$GREEN   m  \t\t\t$COLOR_LIGHT_GRAY To check changes and commit your stuff $COLOR_NONE"
@@ -31,6 +31,8 @@ function help()
     echo -e "\t${GREEN}   i  \t\t\t$COLOR_LIGHT_GRAY To make an initial commit $COLOR_NONE"
     echo -e "\t${GREEN}   p  \t\t\t$COLOR_LIGHT_GRAY To pull when your teammates tell you to do it $COLOR_NONE"
     echo -e "\t${GREEN}   v  \t\t\t$COLOR_LIGHT_GRAY To show the version of the rocket $COLOR_NONE"
+
+    echo -e "\n\t${ORANGE}   update \t\t$COLOR_LIGHT_GRAY Update GitRocket and never miss a new feature! $COLOR_NONE"
 
     echo -e "\n\t$COLOR_GREEN_UNDERLINED  Soon  $COLOR_NONE"
     echo -e "\t$GREEN   r  \t\t\t$COLOR_LIGHT_GRAY Revert & Push $COLOR_NONE"
