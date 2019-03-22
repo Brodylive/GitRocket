@@ -5,7 +5,6 @@ GITROCKET_URL_SRC="https://github.com/Brodylive/GitRocket.git"
 GITROCKET_PATH="$HOME/.gitrocket/"
 GITROCKET_SCRIPT="$GITROCKET_PATH/bin/gitrocket"
 
-
 ##################################################################
 # Installation procedure
 if [[ ! -f "$GITROCKET_SCRIPT" ]]; then
@@ -38,28 +37,31 @@ if [[ -f ${FILE} ]]; then
     return 0
 fi
 
+##################################################################
+# INCLUDES
 
-
+DIR="${BASH_SOURCE%/*}"
+if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
 
 ##################################################################
 # COLORS
-source "${BASH_SOURCE%/*}/src/assets/colors.sh" || source src/assets/colors.sh
+. ${DIR}/src/assets/colors.sh || . /src/assets/colors.sh
 
 ##################################################################
 # ERRORS & SUCCESS VARS
-source "${BASH_SOURCE%/*}/src/assets/flags.sh" || source src/assets/flags.sh
+. ${DIR}/src/assets/flags.sh
 
 ##################################################################
 # DISPLAY (Help, Version, Header)
-source "${BASH_SOURCE%/*}/src/display.sh" || source src/display.sh
+. ${DIR}/src/display.sh
 
 ##################################################################
 # SELECT
-source "${BASH_SOURCE%/*}/src/select.sh" || source src/select.sh
+. ${DIR}/src/select.sh
 
 ##################################################################
 # MESSENGER
-source "${BASH_SOURCE%/*}/src/messenger.sh" || source src/messenger.sh
+. ${DIR}/src/messenger.sh
 
 
 
