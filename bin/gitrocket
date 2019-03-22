@@ -34,34 +34,37 @@ done
 if [[ -f ${FILE} ]]; then
     echo -e "\tAdd GitRocket to your $FILE"
     echo "source $GITROCKET_SCRIPT" >> ${FILE}
+    source ${FILE}
     return 0
 fi
 
 ##################################################################
 # INCLUDES
 
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+function include() {
+    DIR="${BASH_SOURCE%/*}"
+    if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
+    ##################################################################
+    # COLORS
+    . ${DIR}/src/assets/colors.sh || . /src/assets/colors.sh
 
-##################################################################
-# COLORS
-. ${DIR}/src/assets/colors.sh || . /src/assets/colors.sh
+    ##################################################################
+    # ERRORS & SUCCESS VARS
+    . ${DIR}/src/assets/flags.sh || . /src/assets/flags.sh
 
-##################################################################
-# ERRORS & SUCCESS VARS
-. ${DIR}/src/assets/flags.sh
+    ##################################################################
+    # DISPLAY (Help, Version, Header)
+    . ${DIR}/src/display.sh || . /src/display.sh
 
-##################################################################
-# DISPLAY (Help, Version, Header)
-. ${DIR}/src/display.sh
+    ##################################################################
+    # SELECT
+    . ${DIR}/src/select.sh || . /src/select.sh
 
-##################################################################
-# SELECT
-. ${DIR}/src/select.sh
+    ##################################################################
+    # MESSENGER
+    . ${DIR}/src/messenger.sh || . /src/messenger.sh
+}
 
-##################################################################
-# MESSENGER
-. ${DIR}/src/messenger.sh
 
 
 
@@ -362,6 +365,7 @@ function rocket() {
 
 GitRocket()
 {
+  include
   header
 
   # myarray=(one two three)
