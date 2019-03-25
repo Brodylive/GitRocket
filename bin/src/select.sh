@@ -43,9 +43,8 @@ function selectEmoji()
     echo -e "\t\t\t\t 26 📦$COLOR_DARK_THIN_GREEN Updating compiled files or packages$COLOR_NONE"
     echo -en "\t 27 ➕$COLOR_DARK_THIN_GREEN Adding a dependency$COLOR_NONE"
     echo -e "\t\t\t 28 ➖$COLOR_DARK_THIN_GREEN Removing a dependency$COLOR_NONE"
-    echo -e "\t 29 📄$COLOR_DARK_THIN_GREEN Adding or updating license$COLOR_NONE"
-    
-
+    echo -en "\t 29 📄$COLOR_DARK_THIN_GREEN Adding or updating license$COLOR_NONE"
+    echo -e "\t\t\t 30 ⚡️$COLOR_DARK_THIN_GREEN Improving performance$COLOR_NONE"
 
 
     echo -e "\t x \033[0;2mNone$COLOR_NONE"
@@ -169,6 +168,10 @@ function selectEmoji()
       29 )
         selectedEmoji=":page_facing_up:"
         prettyEmoji='📄'
+        return 0 ;;
+      30 )
+        selectedEmoji=":zap:"
+        prettyEmoji='⚡️'
         return 0 ;;
       x )
         selectedEmoji=''
