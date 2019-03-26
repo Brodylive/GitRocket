@@ -58,7 +58,11 @@ function error()
       ;;
     # PUSH CASE
     "$ERROR_ACCESS" )
-      echo -e "\a\n\t\033[5m 🚨 $RED Please make sure you have the correct access rights and the repository exists."
+      echo -e "\a\n\t\033[5m 🚨 $RED Please make sure you have the correct access rights and the repository exists.$COLOR_NONE"
+      ;;
+    # PULL CASE
+    "$ERROR_UNREACHABLE" )
+      echo -e "\a\n\t\033[5m 🚨 $RED Git seems unreachable... Trying again later. $COLOR_NONE"
       ;;
     # PUSH CASE
     "$ERROR_ROCKET" )

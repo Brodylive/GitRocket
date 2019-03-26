@@ -17,6 +17,7 @@ ERROR_ACCESS="access"
 ERROR_STATUS="status"
 ERROR_COMMIT="commit"
 ERROR_ROCKET="rocket"
+ERROR_UNREACHABLE="unreachable"
 
 SUCCESS_NOTHING="nothing"
 SUCCESS_PUSH="push"

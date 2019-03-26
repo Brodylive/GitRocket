@@ -254,7 +254,7 @@ function push()
         return 1
     else
       # BUG PUSH
-      echo "\n $RED NEW PUSH ERROR :: ${git_push} :: $COLOR_NONE"
+      echo -e "\n $RED NEW PUSH ERROR :: ${git_push} :: $COLOR_NONE"
       error "${ERROR_PUSH}"
       return 1
     fi
@@ -274,9 +274,12 @@ function pull(){
   elif [[ ${git_pull} =~ "rewinding head to replay your work on top of it" ]]; then
     pull || return 1
     return 0
+  elif [[ ${git_pull} =~ "GitLab: Failed to authorize your Git request" ]]; then
+    error ${ERROR_ACCESS}
+    return 1
   else
     # BUG PULL
-    echo "\n $RED NEW PULL ERROR :: ${git_pull} :: $COLOR_NONE"
+    echo -e "\n $RED NEW PULL ERROR :: ${git_pull} :: $COLOR_NONE"
     return 1
   fi
 }
