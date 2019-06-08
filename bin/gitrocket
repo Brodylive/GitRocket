@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 GITROCKET_URL_SRC="https://github.com/Brodylive/GitRocket.git"
-GITROCKET_PATH="$HOME/.gitrocket/"
+GITROCKET_PATH="$HOME/.gitrocket"
 GITROCKET_SCRIPT="$GITROCKET_PATH/bin/gitrocket"
 
 ##################################################################
@@ -118,27 +118,31 @@ initCommit()
 
 function before_commit(){
   # ADD
-  echo -en "\n $COLOR_DARK_GRAY Adding files. $COLOR_NONE"
+  echo -en "\n $COLOR_LIGHT_GRAY Adding files $COLOR_NONE"
 
   git_add=$(git add . 2>&1)
   if [[ ${git_add} =~ "not a git repository" ]]; then
+    echo -e "\t $COLOR_LIGHT_RED [✘]"
     error "$ERROR_NOT_GIT_REPO"
     return 1
   elif [[ ${git_add} =~ "please commit or stash them" ]]; then
     git_add=$(git add . 2>&1) || {
+        echo -e "\t $COLOR_LIGHT_RED [✘]"
         echo "\n $RED NEW ADD ERROR :: ${git_add} :: $COLOR_NONE"
         error "$ERROR_ADD"
         return 1
     }
   fi
+  echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎]"
 
-  echo -e "\n $COLOR_DARK_GRAY Status of branch : $COLOR_NONE\n"
+  echo -e "\n $COLOR_LIGHT_GRAY Status of branch : $COLOR_NONE\n"
 
   # STATUS
   git_status=$(git status)
   if [[ ${git_status} =~  "publish your local commits" ]]; then
     # SOMETHING TO PUSH
-    echo -en "\n $COLOR_DARK_GRAY Preparing to publish your last commits. $COLOR_NONE"
+    # SYNC to do 
+    echo -en "\n $COLOR_LIGHT_GRAY Preparing to publish your last commits $COLOR_NONE"
     pull || {
         error ${ERROR_PULL}
         return 1
@@ -238,12 +242,12 @@ function write_message() {
 
 function push()
 {
-    echo -en "\n $COLOR_DARK_GRAY Push starting... $COLOR_NONE"
+    echo -en "\n $COLOR_LIGHT_GRAY Push to remote $COLOR_NONE"
     git_push=$(git push -v 2>&1)
 
     if [[ ${git_push} =~ "updating local tracking ref" ]]; then
       # ALL'S RIGHT!
-      echo -e "\n $COLOR_DARK_GRAY It's pushed! $COLOR_NONE\n"
+      echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
       return 0
     elif [[ ${git_push} =~ "unstaged changes" ]]; then
       rocket || error ${ERROR_ROCKET}
@@ -260,11 +264,11 @@ function push()
 }
 
 function pull(){
-  echo -en "\n $COLOR_DARK_GRAY Pull starting... $COLOR_NONE"
+  echo -en "\n $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE"
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
-    echo -e "\n $COLOR_DARK_GRAY Pull finished. $COLOR_NONE"
+    echo -e "\n $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
     # ASK for stash or commit
@@ -284,11 +288,13 @@ function pull(){
 }
 
 function stash(){
-    echo -en "\n $COLOR_DARK_GRAY Stashing your work... $COLOR_NONE"
+    echo -en "\n $COLOR_LIGHT_GRAY Stashing your work $COLOR_NONE"
     git_stash=$(git stash)
+    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     pull || return 1
+    echo -en " $COLOR_LIGHT_GRAY Stash apply! $COLOR_NONE"
     git_stash=$(git stash pop)
-    echo -en " $COLOR_DARK_GRAY Stash apply! $COLOR_NONE\n"
+    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
     return 0
 }
 
