@@ -91,7 +91,7 @@ function success()
       ;;
     # PUSHED
     "$SUCCESS_PUSH" )
-      echo -e "\n\t$COLOR_BLUE_ON_WHITE ✅  It's all good, man! 👌 $COLOR_NONE"
+      echo -e "\n $COLOR_BLUE_ON_WHITE ✅  It's all good, man! 👌 $COLOR_NONE"
       ;;
     # PULLED
     "$SUCCESS_PULL")

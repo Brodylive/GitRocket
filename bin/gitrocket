@@ -268,7 +268,7 @@ function pull(){
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
-    echo -e "\n $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
     # ASK for stash or commit
