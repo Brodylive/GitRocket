@@ -122,26 +122,27 @@ function before_commit(){
 
   git_add=$(git add . 2>&1)
   if [[ ${git_add} =~ "not a git repository" ]]; then
-    echo -e "\t $COLOR_LIGHT_RED [✘]"
+    echo -e "\t\t\t $COLOR_LIGHT_RED [✘]"
     error "$ERROR_NOT_GIT_REPO"
     return 1
   elif [[ ${git_add} =~ "please commit or stash them" ]]; then
     git_add=$(git add . 2>&1) || {
-        echo -e "\t $COLOR_LIGHT_RED [✘]"
+        echo -e "\t\t\t $COLOR_LIGHT_RED [✘]"
         echo "\n $RED NEW ADD ERROR :: ${git_add} :: $COLOR_NONE"
         error "$ERROR_ADD"
         return 1
     }
   fi
-  echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎]"
+  echo -e "\t\t\t $COLOR_LIGHT_GREEN [✔︎]"
 
-  echo -e "\n $COLOR_LIGHT_GRAY Status of branch : $COLOR_NONE\n"
+  echo -en " $COLOR_LIGHT_GRAY Check status of branch $COLOR_NONE"
 
   # STATUS
   git_status=$(git status)
   if [[ ${git_status} =~  "publish your local commits" ]]; then
     # SOMETHING TO PUSH
     # SYNC to do 
+    echo -e "\t $COLOR_DARK_ORANGE [✘]"
     echo -en "\n $COLOR_LIGHT_GRAY Preparing to publish your last commits $COLOR_NONE"
     pull || {
         error ${ERROR_PULL}
@@ -151,11 +152,13 @@ function before_commit(){
     return 1
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
+    echo -e "\t $COLOR_LIGHT_GREEN [✔︎]"
     success "$SUCCESS_NOTHING"
     return 1 # to stop execution
   elif [[ ${git_status} =~ "Changes to be committed" ]]; then
     # CONTINUE PROGRAM
     # branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
+    echo -e "\t $COLOR_LIGHT_GREEN [✔︎]\n"
     git status # Format this display
     return 0
   else
@@ -247,7 +250,7 @@ function push()
 
     if [[ ${git_push} =~ "updating local tracking ref" ]]; then
       # ALL'S RIGHT!
-      echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
+      echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
       return 0
     elif [[ ${git_push} =~ "unstaged changes" ]]; then
       rocket || error ${ERROR_ROCKET}
@@ -268,13 +271,15 @@ function pull(){
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
-    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
     # ASK for stash or commit
+    echo -e "\t\t $COLOR_DARK_ORANGE [✘] $COLOR_NONE"
     stash || return 1
     return 0
   elif [[ ${git_pull} =~ "rewinding head to replay your work on top of it" ]]; then
+    echo -e "\t\t $COLOR_DARK_ORANGE [✘] $COLOR_NONE"
     pull || return 1
     return 0
   elif [[ ${git_pull} =~ "internal API unreachable" ]]; then
@@ -290,11 +295,11 @@ function pull(){
 function stash(){
     echo -en "\n $COLOR_LIGHT_GRAY Stashing your work $COLOR_NONE"
     git_stash=$(git stash)
-    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     pull || return 1
     echo -en " $COLOR_LIGHT_GRAY Stash applying $COLOR_NONE"
     git_stash=$(git stash pop)
-    echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
+    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
 }
 
