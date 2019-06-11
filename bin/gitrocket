@@ -189,7 +189,7 @@ function commit(){
               return 1
             else
               echo -e "\t $COLOR_LIGHT_GREEN [✔︎]"
-              echo -en "\n $COLOR_DARK_GRAY Commit written $COLOR_NONE"
+              echo -en " $COLOR_DARK_GRAY Commit written $COLOR_NONE"
               echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎]"
               return 0
             fi
