@@ -184,10 +184,13 @@ function commit(){
           write_message
           git_commit=$(git commit -m "$MESSAGE")
             if [[ ${git_commit} =~ "Could not read from remote repository" ]]; then
+              echo -e "\t $COLOR_LIGHT_RED [✘]"
               error "${ERROR_COMMIT}"
               return 1
             else
-              echo -e " $COLOR_DARK_GRAY Commit written $COLOR_NONE"
+              echo -e "\t $COLOR_LIGHT_GREEN [✔︎]"
+              echo -en "\n $COLOR_DARK_GRAY Commit written $COLOR_NONE"
+              echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎]"
               return 0
             fi
           ;;
@@ -228,7 +231,7 @@ function write_message() {
 
     case "$proceeded" in
       y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true)
-        echo -e "\n $COLOR_DARK_GRAY Connect to remote repository...  $COLOR_NONE"
+        echo -en "\n $COLOR_DARK_GRAY Connect to remote repository $COLOR_NONE"
         return 0
         ;;
       n | no | nope | np | nein | 0 | false)
@@ -245,7 +248,7 @@ function write_message() {
 
 function push()
 {
-    echo -en "\n $COLOR_LIGHT_GRAY Push to remote $COLOR_NONE"
+    echo -en " $COLOR_LIGHT_GRAY Push to remote $COLOR_NONE"
     git_push=$(git push -v 2>&1)
 
     if [[ ${git_push} =~ "updating local tracking ref" ]]; then
@@ -267,7 +270,7 @@ function push()
 }
 
 function pull(){
-  echo -en "\n $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE"
+  echo -en " $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE"
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
