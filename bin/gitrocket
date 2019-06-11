@@ -292,7 +292,7 @@ function stash(){
     git_stash=$(git stash)
     echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     pull || return 1
-    echo -en " $COLOR_LIGHT_GRAY Stash apply! $COLOR_NONE"
+    echo -en " $COLOR_LIGHT_GRAY Stash applying $COLOR_NONE"
     git_stash=$(git stash pop)
     echo -e "\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
     return 0
