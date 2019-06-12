@@ -116,24 +116,25 @@ initCommit()
   fi
 }
 
-function before_commit(){
+function before_commit()
+{
   # ADD
-  echo -en "\n $COLOR_LIGHT_GRAY Adding files $COLOR_NONE \t\t"
+  echo -en "\n $COLOR_LIGHT_GRAY Add files to git$COLOR_NONE \t\t"
 
   git_add=$(git add . 2>&1)
   if [[ ${git_add} =~ "not a git repository" ]]; then
-    echo -e "$COLOR_LIGHT_RED [✘]"
+    step_error
     error "$ERROR_NOT_GIT_REPO"
     return 1
   elif [[ ${git_add} =~ "please commit or stash them" ]]; then
     git_add=$(git add . 2>&1) || {
-        echo -e "$COLOR_LIGHT_RED [✘]"
+        step_error
         echo "\n $RED NEW ADD ERROR :: ${git_add} :: $COLOR_NONE"
         error "$ERROR_ADD"
         return 1
     }
   fi
-  echo -e "$COLOR_LIGHT_GREEN [✔︎]"
+  step_success
 
   echo -en " $COLOR_LIGHT_GRAY Check status of branch $COLOR_NONE \t"
 
@@ -152,14 +153,16 @@ function before_commit(){
     return 1
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
-    echo -e "$COLOR_LIGHT_GREEN [✔︎]"
+    step_success
+    statusbranch
     success "$SUCCESS_NOTHING"
     return 1 # to stop execution
   elif [[ ${git_status} =~ "Changes to be committed" ]]; then
     # CONTINUE PROGRAM
     # branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
     echo -e "$COLOR_LIGHT_GREEN [✔︎]\n"
-    git status # Format this display
+    statusbranch
+    # git status # Format this display
     return 0
   else
     # BUG STATUS
@@ -169,13 +172,37 @@ function before_commit(){
   fi
 }
 
+function statusbranch()
+{
+  branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
+  echo -e " ${COLOR_LIGHT_GRAY} On branch ${PURPLE}${branch}${COLOR_NONE}\n"
+  array=$(git diff --name-status $(git merge-base master HEAD))
+  for arg in $array
+  do
+    case ${arg} in
+      'M')
+      echo -en "${YELLOW}"
+      ;;
+      'A')
+      echo -en "${COLOR_LIGHT_GREEN}"
+      ;;
+      'D')
+      echo -en "${COLOR_LIGHT_RED}"
+      ;;
+      *)
+      echo -e "  $arg ${COLOR_NONE}"
+      ;;
+    esac
+  done
+}
+
 function commit()
 {
     COUNTER=0
     ANSWER="n"
     while [[  ${COUNTER} -lt 42 ]]; do
       if [[ -z "$1" ]]; then
-        echo -ne "\n\t\033[0;37m🚀 Commit this? [y/n] $COLOR_NONE"
+        echo -ne "\n ${BOLD} 🚀 Commit this? [y/n] $COLOR_NONE"
         read ANSWER
       else
         ANSWER="y"
@@ -185,13 +212,13 @@ function commit()
           write_message
           git_commit=$(git commit -m "$MESSAGE")
             if [[ ${git_commit} =~ "Could not read from remote repository" ]]; then
-              echo -e "$COLOR_LIGHT_RED [✘]"
+              step_error
               error "${ERROR_COMMIT}"
               return 1
             else
-              echo -e "$COLOR_LIGHT_GREEN [✔︎]"
+              step_success
               echo -en " $COLOR_DARK_GRAY Commit written $COLOR_NONE \t\t"
-              echo -e "$COLOR_LIGHT_GREEN [✔︎]"
+              step_success
               return 0
             fi
           ;;
@@ -201,7 +228,10 @@ function commit()
           return 0
           ;;
         * )
-          echo -e "\n\t\033[5;33m Not an anwser$COLOR_NONE"
+          echo -e "\n${COLOR_LIGHT_RED}  Not an anwser, please choose below : $COLOR_NONE"
+          echo -e "${ORANGE}  y = [ y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true ]"
+          echo -e "  n = [ n | no | nope | np | nein | 0 | false ]${COLOR_NONE}"
+          echo -e "  ${COLOR_DARK_GRAY}For any request, please pull request!"
           ;;
       esac
     done
@@ -215,7 +245,7 @@ function write_message()
     if [[ ${commit_thrown} -eq 1 ]]; then
         selectEmoji
 
-        echo -en "\n \033[0;37m ✎ Label du commit ➣ $COLOR_NONE"
+        echo -en "\n  ✎ Label du commit ➣ $COLOR_NONE"
         read label
         # $selectedEmoji from SELECT
         if [[ -z $selectedEmoji ]]; then
@@ -278,15 +308,15 @@ function pull()
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
-    echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    step_success
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
     # ASK for stash or commit
-    echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
+    step_wait
     stash || return 1
     return 0
   elif [[ ${git_pull} =~ "rewinding head to replay your work on top of it" ]]; then
-    echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
+    step_wait
     pull || return 1
     return 0
   elif [[ ${git_pull} =~ "internal API unreachable" ]]; then

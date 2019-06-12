@@ -95,9 +95,6 @@ function success()
   case "$1" in
     # NOTHING TO COMMIT
     "$SUCCESS_NOTHING" )
-      # display name of branch
-      branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
-      echo -e "  $COLOR_DARK_GREEN We're on branch $COLOR_LIGHT_RED💥 $branch and it's up to date!\n"
       echo -e "\n  $COLOR_BLACK_ON_WHITE ✅  Nothing to commit Bro'!  $COLOR_NONE"
       ;;
     # PUSHED
