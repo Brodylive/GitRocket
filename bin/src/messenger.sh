@@ -11,6 +11,7 @@ source "${BASH_SOURCE%/*}/assets/flags.sh" || source assets/flags.sh
 
 ##################################################################
 # ERRORS MESSAGES
+
 function error()
 {
   case "$1" in
@@ -76,9 +77,19 @@ function error()
   esac
 }
 
+function step_error()
+{
+  echo -e "$COLOR_LIGHT_RED [✘] $COLOR_NONE"
+}
+
+function step_wait()
+{
+  echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
+}
 
 ##################################################################
 # SUCCESS MESSAGES
+
 function success()
 {
   case "$1" in
@@ -86,24 +97,27 @@ function success()
     "$SUCCESS_NOTHING" )
       # display name of branch
       branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
-      echo -e "\t$COLOR_DARK_GREEN We're on branch $branch and it's up to date!\n"
-      echo -e "\n\t $COLOR_BLACK_ON_WHITE ✅  Nothing to commit Bro'!  $COLOR_NONE"
+      echo -e "  $COLOR_DARK_GREEN We're on branch $COLOR_LIGHT_RED💥 $branch and it's up to date!\n"
+      echo -e "\n  $COLOR_BLACK_ON_WHITE ✅  Nothing to commit Bro'!  $COLOR_NONE"
       ;;
     # PUSHED
     "$SUCCESS_PUSH" )
-      echo -e "\n $COLOR_BLUE_ON_WHITE ✅  It's all good, man! 👌 $COLOR_NONE"
+      echo -e "\n  $COLOR_BLACK_ON_WHITE ✅  It's all good, man! 👌 $COLOR_NONE"
       ;;
     # PULLED
     "$SUCCESS_PULL")
-      echo -e "\n\t$COLOR_BLUE_ON_WHITE ✅  Everything is pulled, man! $COLOR_NONE"
+      echo -e "\n  $COLOR_BLUE_ON_WHITE ✅  Everything is pulled, man! $COLOR_NONE"
       ;;
     "$SUCCESS_CLONE")
-      echo -e "\n\t$COLOR_BLUE_ON_WHITE ✅  The git repo is cloned! $COLOR_NONE"
+      echo -e "\n  $COLOR_BLUE_ON_WHITE ✅  The git repo is cloned! $COLOR_NONE"
       ;;
     "$SUCCESS_INIT")
-      echo -e "\n\t$COLOR_BLACK_ON_WHITE 🎉 It's the initiiiial commit! 🌸 $COLOR_NONE"
+      echo -e "\n  $COLOR_BLACK_ON_WHITE 🎉 It's the initiiiial commit! 🌸 $COLOR_NONE"
       ;;
   esac
+}
 
-
+function step_success()
+{
+  echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
 }

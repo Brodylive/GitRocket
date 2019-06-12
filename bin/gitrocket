@@ -118,32 +118,32 @@ initCommit()
 
 function before_commit(){
   # ADD
-  echo -en "\n $COLOR_LIGHT_GRAY Adding files $COLOR_NONE"
+  echo -en "\n $COLOR_LIGHT_GRAY Adding files $COLOR_NONE \t\t"
 
   git_add=$(git add . 2>&1)
   if [[ ${git_add} =~ "not a git repository" ]]; then
-    echo -e "\t\t\t $COLOR_LIGHT_RED [✘]"
+    echo -e "$COLOR_LIGHT_RED [✘]"
     error "$ERROR_NOT_GIT_REPO"
     return 1
   elif [[ ${git_add} =~ "please commit or stash them" ]]; then
     git_add=$(git add . 2>&1) || {
-        echo -e "\t\t\t $COLOR_LIGHT_RED [✘]"
+        echo -e "$COLOR_LIGHT_RED [✘]"
         echo "\n $RED NEW ADD ERROR :: ${git_add} :: $COLOR_NONE"
         error "$ERROR_ADD"
         return 1
     }
   fi
-  echo -e "\t\t\t $COLOR_LIGHT_GREEN [✔︎]"
+  echo -e "$COLOR_LIGHT_GREEN [✔︎]"
 
-  echo -en " $COLOR_LIGHT_GRAY Check status of branch $COLOR_NONE"
+  echo -en " $COLOR_LIGHT_GRAY Check status of branch $COLOR_NONE \t"
 
   # STATUS
   git_status=$(git status)
   if [[ ${git_status} =~  "publish your local commits" ]]; then
     # SOMETHING TO PUSH
     # SYNC to do 
-    echo -e "\t $COLOR_DARK_ORANGE [✘]"
-    echo -en "\n $COLOR_LIGHT_GRAY Preparing to publish your last commits $COLOR_NONE"
+    echo -e "$COLOR_DARK_ORANGE [↓]"
+    echo -e "\n $YELLOW Preparing to publish your commits $COLOR_NONE\n"
     pull || {
         error ${ERROR_PULL}
         return 1
@@ -152,13 +152,13 @@ function before_commit(){
     return 1
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
-    echo -e "\t $COLOR_LIGHT_GREEN [✔︎]"
+    echo -e "$COLOR_LIGHT_GREEN [✔︎]"
     success "$SUCCESS_NOTHING"
     return 1 # to stop execution
   elif [[ ${git_status} =~ "Changes to be committed" ]]; then
     # CONTINUE PROGRAM
     # branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
-    echo -e "\t $COLOR_LIGHT_GREEN [✔︎]\n"
+    echo -e "$COLOR_LIGHT_GREEN [✔︎]\n"
     git status # Format this display
     return 0
   else
@@ -169,7 +169,8 @@ function before_commit(){
   fi
 }
 
-function commit(){
+function commit()
+{
     COUNTER=0
     ANSWER="n"
     while [[  ${COUNTER} -lt 42 ]]; do
@@ -184,13 +185,13 @@ function commit(){
           write_message
           git_commit=$(git commit -m "$MESSAGE")
             if [[ ${git_commit} =~ "Could not read from remote repository" ]]; then
-              echo -e "\t $COLOR_LIGHT_RED [✘]"
+              echo -e "$COLOR_LIGHT_RED [✘]"
               error "${ERROR_COMMIT}"
               return 1
             else
-              echo -e "\t $COLOR_LIGHT_GREEN [✔︎]"
-              echo -en " $COLOR_DARK_GRAY Commit written $COLOR_NONE"
-              echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎]"
+              echo -e "$COLOR_LIGHT_GREEN [✔︎]"
+              echo -en " $COLOR_DARK_GRAY Commit written $COLOR_NONE \t\t"
+              echo -e "$COLOR_LIGHT_GREEN [✔︎]"
               return 0
             fi
           ;;
@@ -206,7 +207,8 @@ function commit(){
     done
 }
 
-function write_message() {
+function write_message() 
+{
   COUNTER=0
   commit_thrown=1
   while [[  ${COUNTER} -lt 42 ]]; do
@@ -231,7 +233,7 @@ function write_message() {
 
     case "$proceeded" in
       y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true)
-        echo -en "\n $COLOR_DARK_GRAY Connect to remote repository $COLOR_NONE"
+        echo -en "\n $COLOR_DARK_GRAY Connect to remote repository $COLOR_NONE \t"
         return 0
         ;;
       n | no | nope | np | nein | 0 | false)
@@ -248,17 +250,18 @@ function write_message() {
 
 function push()
 {
-    echo -en " $COLOR_LIGHT_GRAY Push to remote $COLOR_NONE"
+    echo -en " $COLOR_LIGHT_GRAY Push to remote $COLOR_NONE \t\t"
     git_push=$(git push -v 2>&1)
 
     if [[ ${git_push} =~ "updating local tracking ref" ]]; then
       # ALL'S RIGHT!
-      echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
+      echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE\n"
       return 0
     elif [[ ${git_push} =~ "unstaged changes" ]]; then
       rocket || error ${ERROR_ROCKET}
       return 0
     elif [[ ${git_push} =~ "Could not read from remote repository" ]];then
+        step_error
         error ${ERROR_ACCESS}
         return 1
     else
@@ -269,23 +272,25 @@ function push()
     fi
 }
 
-function pull(){
-  echo -en " $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE"
+function pull()
+{
+  echo -en " $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE \t\t"
   git_pull=$(git pull --rebase 2>&1)
 
   if [[ ${git_pull} =~ "is up to date" ]]; then
-    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
     # ASK for stash or commit
-    echo -e "\t\t $COLOR_DARK_ORANGE [✘] $COLOR_NONE"
+    echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
     stash || return 1
     return 0
   elif [[ ${git_pull} =~ "rewinding head to replay your work on top of it" ]]; then
-    echo -e "\t\t $COLOR_DARK_ORANGE [✘] $COLOR_NONE"
+    echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
     pull || return 1
     return 0
   elif [[ ${git_pull} =~ "internal API unreachable" ]]; then
+    step_error
     error ${ERROR_UNREACHABLE}
     return 1
   else
@@ -295,18 +300,20 @@ function pull(){
   fi
 }
 
-function stash(){
-    echo -en "\n $COLOR_LIGHT_GRAY Stashing your work $COLOR_NONE"
+function stash()
+{
+    echo -en " $COLOR_LIGHT_GRAY Stashing your work $COLOR_NONE \t\t"
     git_stash=$(git stash)
-    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     pull || return 1
-    echo -en " $COLOR_LIGHT_GRAY Stash applying $COLOR_NONE"
+    echo -en " $COLOR_LIGHT_GRAY Stash applying $COLOR_NONE \t\t"
     git_stash=$(git stash pop)
-    echo -e "\t\t $COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+    echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
     return 0
 }
 
-function reset(){
+function reset()
+{
   echo -ne "\n\t\033[0;37m❌ Want to reset all or a file? [y/n/namefile] $COLOR_NONE"
   read proceeded
   case "$proceeded" in
@@ -334,7 +341,8 @@ function reset(){
   esac
 }
 
-function rocket() {
+function rocket() 
+{
     # throws errors and success,
     # so just stop execution if something is thrown
     before_commit || return 1
