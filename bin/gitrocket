@@ -233,7 +233,7 @@ function write_message()
 
     case "$proceeded" in
       y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true)
-        echo -en "\n $COLOR_DARK_GRAY Connect to remote repository $COLOR_NONE \t"
+        echo -en "\n $COLOR_DARK_GRAY Connect to remote repository $COLOR_NONE "
         return 0
         ;;
       n | no | nope | np | nein | 0 | false)
