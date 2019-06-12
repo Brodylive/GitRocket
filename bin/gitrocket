@@ -181,16 +181,16 @@ function statusbranch()
   do
     case ${arg} in
       'M')
-      echo -en "${YELLOW}"
+      echo -en "${YELLOW}  → "
       ;;
       'A')
-      echo -en "${COLOR_LIGHT_GREEN}"
+      echo -en "${COLOR_LIGHT_GREEN}  + "
       ;;
       'D')
-      echo -en "${COLOR_LIGHT_RED}"
+      echo -en "${COLOR_LIGHT_RED} - "
       ;;
       *)
-      echo -e "  $arg ${COLOR_NONE}"
+      echo -e "$arg ${COLOR_NONE}"
       ;;
     esac
   done
@@ -258,7 +258,7 @@ function write_message()
         
     fi
 
-    echo -en "\n $COLOR_LIGHT_RED ☞  $WHITE_ON_GREY $PRETTYMSG $CYAN OK? [y/n] $COLOR_NONE"
+    echo -en "\n  ☞  $WHITE_ON_GREY $PRETTYMSG $CYAN GO? [y/n] $COLOR_NONE"
     read proceeded
 
     case "$proceeded" in
@@ -267,8 +267,9 @@ function write_message()
         return 0
         ;;
       n | no | nope | np | nein | 0 | false)
-        echo -e "$COLOR_DARK_GRAY Commit thrown. $COLOR_NONE"
+        echo -en "\n $COLOR_DARK_GRAY Commit thrown $COLOR_NONE \t\t"
         commit_thrown=1
+        step_success
         ;;
       * )
         echo -e "\n\t\033[5;33m Not an anwser$COLOR_NONE"

@@ -8,7 +8,7 @@ source "${BASH_SOURCE%/*}/assets/colors.sh" || source assets/colors.sh
 ##################################################################
 # VERSION
 
-VERSION="0.9"
+VERSION="0.9.5"
 
 function version() {
     echo -e "$COLOR_DARK_ORANGE  Version $ORANGE $VERSION $COLOR_NONE"
