@@ -30,6 +30,7 @@ function help()
     echo -e "\t${GREEN}   c ${CYAN}<new_folder>  \t$COLOR_LIGHT_GRAY To clone a git repo' into new folder"
     echo -e "\t${GREEN}   i  \t\t\t$COLOR_LIGHT_GRAY To make an initial commit $COLOR_NONE"
     echo -e "\t${GREEN}   p  \t\t\t$COLOR_LIGHT_GRAY To pull when your teammates tell you to do it $COLOR_NONE"
+    echo -e "\t${GREEN}   s  \t\t\t$COLOR_LIGHT_GRAY To synchronize your local repo with the remote $COLOR_NONE"
     echo -e "\t${GREEN}   v  \t\t\t$COLOR_LIGHT_GRAY To show the version of the rocket $COLOR_NONE"
 
     echo -e "\n\t${ORANGE}   update \t\t$COLOR_LIGHT_GRAY Update GitRocket and never miss a new feature! $COLOR_NONE"
