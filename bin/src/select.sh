@@ -49,7 +49,7 @@ function selectEmoji()
 
     echo -e "  x \033[0;2mNone$COLOR_NONE"
 
-    echo -ne "\n  ☺︎ Number of emoji ➣ $COLOR_NONE"
+    echo -ne "\n ${CYAN} ☺︎ Number of emoji ➣ $COLOR_NONE"
     read opt
 
     case "$opt" in
