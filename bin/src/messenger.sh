@@ -65,6 +65,11 @@ function error()
     "$ERROR_UNREACHABLE" )
       echo -e "\a\n\t\033[5m 🚨 $RED Git seems unreachable... Trying again later. $COLOR_NONE"
       ;;
+    # PULL CASE
+    "$ERROR_UNMERGEDFILES" )
+      echo -e "\a\n\033[5m  💥$COLOR_LIGHT_RED You have unmerged files!"
+      echo -e " $RED    Resolve confilts first, then launch the rocket again$COLOR_NONE"
+      ;;
     # PUSH CASE
     "$ERROR_ROCKET" )
       echo -e "\a\n\t\033[5m 💥🚀  \033[0;1;31mHouston! We have a problem!$COLOR_NONE"

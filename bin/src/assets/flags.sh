@@ -18,6 +18,7 @@ ERROR_STATUS="status"
 ERROR_COMMIT="commit"
 ERROR_ROCKET="rocket"
 ERROR_UNREACHABLE="unreachable"
+ERROR_UNMERGEDFILES="unmerged"
 
 SUCCESS_NOTHING="nothing"
 SUCCESS_PUSH="push"
