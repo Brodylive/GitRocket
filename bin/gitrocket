@@ -205,7 +205,7 @@ function statusbranch()
       ;;
     esac
   done
-  # echo -e ""
+  echo -e ""
 }
 
 function commit()

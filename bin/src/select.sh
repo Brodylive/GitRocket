@@ -10,7 +10,7 @@ source "${BASH_SOURCE%/*}/assets/colors.sh" || source assets/colors.sh
 
 function selectEmoji()
 {
-  echo -e "\n\n $COLOR_LIGHT_CYAN Available Emojis  $COLOR_NONE\n"
+  echo -e "\n $COLOR_LIGHT_CYAN Available Emojis  $COLOR_NONE\n"
 
   COUNTER=0
   while [[  ${COUNTER} -lt 42 ]]; do
