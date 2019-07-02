@@ -177,7 +177,7 @@ function statusbranch()
   branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
   echo -e "\n ${COLOR_LIGHT_GRAY} On branch ${PURPLE}${branch}${COLOR_NONE}"
   
-  array=$(git diff --name-status $(git merge-base master HEAD))
+  array=$(git diff --name-status $(git merge-base $branch HEAD))
   
   if [ -n "${array}" ]; then
     echo -en " ${COLOR_LIGHT_GRAY} Added${COLOR_LIGHT_GREEN} + ${COLOR_LIGHT_GRAY}|"
