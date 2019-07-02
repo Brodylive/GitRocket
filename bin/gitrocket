@@ -176,11 +176,15 @@ function statusbranch()
 {
   branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
   echo -e "\n ${COLOR_LIGHT_GRAY} On branch ${PURPLE}${branch}${COLOR_NONE}"
-  echo -en " ${COLOR_LIGHT_GRAY} Added${COLOR_LIGHT_GREEN} + ${COLOR_LIGHT_GRAY}|"
-  echo -en "${COLOR_LIGHT_GRAY} Modified${YELLOW} → ${COLOR_LIGHT_GRAY}|"
-  echo -e "${COLOR_LIGHT_GRAY} Removed${COLOR_LIGHT_RED} - \n"
-
+  
   array=$(git diff --name-status $(git merge-base master HEAD))
+  
+  if [[ -n $array ]]; then
+    echo -en " ${COLOR_LIGHT_GRAY} Added${COLOR_LIGHT_GREEN} + ${COLOR_LIGHT_GRAY}|"
+    echo -en "${COLOR_LIGHT_GRAY} Modified${YELLOW} → ${COLOR_LIGHT_GRAY}|"
+    echo -e "${COLOR_LIGHT_GRAY} Removed${COLOR_LIGHT_RED} - \n"
+  fi
+
   for arg in $array
   do
     case ${arg} in
@@ -191,7 +195,7 @@ function statusbranch()
       echo -en "${COLOR_LIGHT_GREEN}  + "
       ;;
       'D')
-      echo -en "${COLOR_LIGHT_RED} - "
+      echo -en "${COLOR_LIGHT_RED}  - "
       ;;
       'R')
       echo -en "${YELLOW}  → "
