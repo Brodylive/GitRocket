@@ -68,7 +68,7 @@ function error()
     # PULL CASE
     "$ERROR_UNMERGEDFILES" )
       echo -e "\a\n\033[5m  💥$COLOR_LIGHT_RED You have unmerged files!"
-      echo -e " $RED    Resolve confilts first, then launch the rocket again$COLOR_NONE"
+      echo -e " $RED    Resolve conflicts first, then relaunch the rocket$COLOR_NONE"
       ;;
     # PUSH CASE
     "$ERROR_ROCKET" )
