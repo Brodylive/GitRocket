@@ -81,7 +81,7 @@ function error()
     ;;
   esac
 
-  echo -e "\n\n"
+  echo -e "\n"
 }
 
 function step_error()
@@ -120,7 +120,7 @@ function success()
       ;;
   esac
 
-  echo -e "\n\n"
+  echo -e "\n"
 }
 
 function step_success()
