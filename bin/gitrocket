@@ -257,8 +257,7 @@ function commit()
           ;;
         n | no | nope | np | nein | 0 | false)
           reset || return 1
-          before_commit || return 1
-          return 0
+          statusbranch
           ;;
         * )
           echo -e "\n${COLOR_LIGHT_RED}  Not an anwser, please choose below : $COLOR_NONE"
@@ -389,7 +388,7 @@ function reset()
   read proceeded
   case "$proceeded" in
     y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true)
-      (git reset HEAD && git checkout .) || {
+      git_reset=$(git reset HEAD && git checkout .) || {
         error ${ERROR_RESET}
         return 1
       }
@@ -402,8 +401,8 @@ function reset()
       return 1 # to stop execution
       ;;
     * )
-      echo -en "\n $COLOR_DARK_GRAY Reset ${proceeded} $COLOR_NONE \t\t"
-      (git reset HEAD "$proceeded" && git checkout "$proceeded") || {
+      echo -en "\n $COLOR_LIGHT_GRAY Reset ${proceeded} $COLOR_NONE \t"
+       git_reset=$(git reset HEAD "$proceeded" && git checkout "$proceeded") || {
         step_error
         error ${ERROR_RESET}
         return 1
@@ -411,6 +410,7 @@ function reset()
       step_success
       ;;
   esac
+  return 0
 }
 
 function rocket() 
@@ -466,7 +466,6 @@ function include() {
 GitRocket()
 {
   include
-  header
 
   # myarray=(one two three)
   # case "${myarray[@]}" in  *"two"*) echo "found" ;; esac
@@ -480,38 +479,46 @@ GitRocket()
       ;;
     c)
     # CLONE GIT REPO - variable 2 = folder for git repo
+      header
       clone "$2"
       return 0
       ;;
     i)
       # INITIAL COMMIT
+      header
       initCommit
       return 0
       ;;
     p)
+      header
       pull && success "${SUCCESS_PULL}"
       return 0
       ;;
     s)
+      header
       sync && success "$SUCCESS_PUSH"
       return 0
       ;;
     m)
       # Errors thrown inside the rocket
+      header
       rocket && success "$SUCCESS_PUSH"
       return 0
       ;;
     ma)
       # Errors thrown inside the rocket
+      header
       rocket "agree" && success "$SUCCESS_PUSH"
       return 0
       ;;
     update)
-       updateGit
-       return 0
-       ;;
+      header
+      updateGit
+      return 0
+      ;;
     *)
     # HELP
+      header
       help
       return 0
       ;;
