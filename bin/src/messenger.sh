@@ -80,6 +80,8 @@ function error()
       echo -e "\a\n\t$RED Error uncaught."
     ;;
   esac
+
+  echo -e "\n\n"
 }
 
 function step_error()
@@ -117,6 +119,8 @@ function success()
       echo -e "\n  $COLOR_BLACK_ON_WHITE 🎉 It's the initiiiial commit! 🌸 $COLOR_NONE"
       ;;
   esac
+
+  echo -e "\n\n"
 }
 
 function step_success()

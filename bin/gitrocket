@@ -144,13 +144,28 @@ function before_commit()
     # SOMETHING TO PUSH
     # SYNC to do 
     step_wait
-    echo -e "\n $YELLOW Preparing to publish your commits :$COLOR_NONE\n"
+    statusbranch
+    echo -en "\n $YELLOW Preparing to publish your commits :$COLOR_NONE"
     git_cherry=$(git cherry -v)
     for commit in $git_cherry
     do
-      echo -en " $YELLOW ${commit} $COLOR_NONE"
+      case $commit in
+        '+' )
+          echo -en "\n "
+          ;;
+        * )
+          if [[ ${commit} =~ ^[0-9A-Fa-f]*$ ]]; then
+            echo -en "${COLOR_LIGHT_RED} ${commit:(-8)}${COLOR_NONE} "
+          elif [[ ${commit} =~ ":" ]]; then
+            convert ${commit}
+            # echo -en "${YELLOW} ${commit}${COLOR_NONE}"
+          else
+            echo -en "${commit} "
+          fi
+          ;;
+      esac
     done
-    echo ""
+    echo -e "\n"
     pull || {
         error ${ERROR_PULL}
         return 1
@@ -394,7 +409,6 @@ function reset()
         return 1
       }
       step_success
-      return 0
       ;;
   esac
 }

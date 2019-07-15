@@ -187,3 +187,105 @@ function selectEmoji()
     esac
   done
 }
+
+function convert()
+{
+  case "$1" in
+    ':bug:' )
+      echo -en " 🐛 "
+      return 0 ;;
+    ':speech_balloon:' )
+      echo -en " 💬 "
+      return 0 ;;
+    ':sparkles:' )
+      echo -en " ✨ "
+      return 0 ;;
+    ':memo:' )
+      echo -en " 📝 "
+      return 0 ;;
+    ':lipstick:' )
+      echo -en " 💄 "
+      return 0 ;;
+    ':construction:' )
+      echo -en " 🚧 "
+      return 0 ;;
+    ':green_heart:' )
+      echo -en " 💚 "
+      return 0 ;;
+    ':art:' )
+      echo -en " 🎨 "
+      return 0 ;;
+    ':truck:' )
+      echo -en " 🚚 "
+      return 0 ;;
+    ':children_crossing:' )
+      echo -en " 🚸 "
+      return 0 ;;
+    ':card_file_box:' )
+      echo -en " 🗃 "
+      return 0 ;;
+    ':fire:' )
+      echo -en " 🔥 "
+      return 0 ;;
+    ':recycle:' )
+      echo -en " ♻️ "
+      return 0 ;;
+    ':bento:' )
+      echo -en " 🍱 "
+      return 0 ;;
+    ':bulb:' )
+      echo -en " 💡 "
+      return 0 ;;
+    ':globe_with_meridians:' )
+      echo -en " 🌐 "
+      return 0 ;;
+    ':see_no_evil:' )
+      echo -en " 🙈 "
+      return 0 ;;
+    ':alembic:' )
+      echo -en " ⚗️ "
+      return 0 ;;
+    ':lock:' )
+      echo -en " 🔒 "
+      return 0 ;;
+    ':chart_with_upwards_trend:' )
+      echo -en " 📈 "
+      return 0 ;;
+    ':construction_worker:' )
+      echo -en " 👷‍♂️ "
+      return 0 ;;
+    ':alien:' )
+      echo -en " 👽 "
+      return 0 ;;
+    ':ok_hand:' )
+      echo -en " 👌 "
+      return 0 ;;
+    ':building_construction:' )
+      echo -en " 🏗 "
+      return 0 ;;
+    ':rocket:' )
+      echo -en " 🚀 "
+      return 0 ;;
+    ':package:' )
+      echo -en " 📦 "
+      return 0 ;;
+    ':heavy_plus_sign:' )
+      echo -en " ➕ "
+      return 0 ;;
+    ':heavy_minus_sign:' )
+      echo -en " ➖ "
+      return 0 ;;
+    ':page_facing_up:' )
+      echo -en " 📄 "
+      return 0 ;;
+    ':zap:' )
+      echo -en " ⚡️ "
+      return 0 ;;
+    ':mag:' )
+      echo -en " 🔍 "
+      return 0 ;;
+    * )
+      echo -en "$1"
+      return 0 ;;
+  esac
+}
