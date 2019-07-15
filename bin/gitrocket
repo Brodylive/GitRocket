@@ -144,7 +144,13 @@ function before_commit()
     # SOMETHING TO PUSH
     # SYNC to do 
     step_wait
-    echo -e "\n $YELLOW Preparing to publish your commits $COLOR_NONE\n"
+    echo -e "\n $YELLOW Preparing to publish your commits :$COLOR_NONE\n"
+    git_cherry=$(git cherry -v)
+    for commit in $git_cherry
+    do
+      echo -en " $YELLOW ${commit} $COLOR_NONE"
+    done
+    echo ""
     pull || {
         error ${ERROR_PULL}
         return 1
@@ -177,17 +183,17 @@ function statusbranch()
   branch=$(git branch 2>/dev/null | sed -n '/^\*/s/^\* //p')
   echo -e "\n ${COLOR_LIGHT_GRAY} On branch ${PURPLE}${branch}${COLOR_NONE}"
   
-  array=$(git diff --name-status $(git merge-base $branch HEAD))
+  git_diff=$(git diff --name-status $(git merge-base $branch HEAD))
   
-  if [ -n "${array}" ]; then
+  if [ -n "${git_diff}" ]; then
     echo -en " ${COLOR_LIGHT_GRAY} Added${COLOR_LIGHT_GREEN} + ${COLOR_LIGHT_GRAY}|"
     echo -en "${COLOR_LIGHT_GRAY} Modified${YELLOW} → ${COLOR_LIGHT_GRAY}|"
     echo -e "${COLOR_LIGHT_GRAY} Removed${COLOR_LIGHT_RED} - \n"
   fi
 
-  for arg in $array
+  for file in $git_diff
   do
-    case ${arg} in
+    case ${file} in
       'M')
       echo -en "${YELLOW}  → "
       ;;
@@ -201,7 +207,7 @@ function statusbranch()
       echo -en "${YELLOW}  → "
       ;;
       *)
-      echo -e "$arg ${COLOR_NONE}"
+      echo -e "$file ${COLOR_NONE}"
       ;;
     esac
   done
@@ -236,7 +242,7 @@ function commit()
           ;;
         n | no | nope | np | nein | 0 | false)
           reset || return 1
-          commit || return 1
+          before_commit || return 1
           return 0
           ;;
         * )
@@ -361,7 +367,7 @@ function stash()
 
 function reset()
 {
-  echo -ne "\n\t\033[0;37m❌ Want to reset all or a file? [y/n/namefile] $COLOR_NONE"
+  echo -ne "\n ${CYAN} ❌ Want to reset all or a specific file? [y/n/pathfile] $COLOR_NONE"
   read proceeded
   case "$proceeded" in
     y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true)
@@ -370,19 +376,21 @@ function reset()
         return 1
       }
       # RAINBOW COLOR
-      echo -e "\n\t\033[0;36m🌞 \033[0;1;94;105m Have \033[0;97;44m a nice \033[0;97;101m day! ️$COLOR_NONE"
+      echo -e "\n \033[0;36m🌞 \033[0;1;94;105m Have \033[0;97;44m a nice \033[0;97;101m day! ️$COLOR_NONE"
       return 1 # to stop execution
       ;;
     n | no | nope | np | nein | 0 | false)
-      echo -e "\n\t\033[5;33m⚠️ \033[0;1;33m Don't forget to commit dude! ️$COLOR_NONE"
+      echo -e "\n ⚠️ \033[0;1;33m Don't forget to commit dude! ️$COLOR_NONE"
       return 1 # to stop execution
       ;;
     * )
+      echo -en "\n $COLOR_DARK_GRAY Reset ${proceeded} $COLOR_NONE \t\t"
       (git reset HEAD "$proceeded" && git checkout "$proceeded") || {
+        step_error
         error ${ERROR_RESET}
         return 1
       }
-      echo -e " $COLOR_DARK_GRAY The file has been reset. $COLOR_NONE"
+      step_success
       return 0
       ;;
   esac
