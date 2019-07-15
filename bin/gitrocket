@@ -290,7 +290,10 @@ function write_message()
         step_success
         ;;
       * )
-        echo -e "\n\t\033[5;33m Not an anwser$COLOR_NONE"
+        echo -e "\n${COLOR_LIGHT_RED}  Not an anwser, please choose below : $COLOR_NONE"
+        echo -e "${ORANGE}  y = [ y | yes | yep | yep! | yup! | yup | ouaip | zyva | 1 | true ]"
+        echo -e "  n = [ n | no | nope | np | nein | 0 | false ]${COLOR_NONE}"
+        echo -e "  ${COLOR_DARK_GRAY}For any request, please pull request!\n"
         commit_thrown=0
         ;;
     esac
