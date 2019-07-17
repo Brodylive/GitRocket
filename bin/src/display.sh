@@ -48,7 +48,7 @@ function help()
 # HEADER
 
 function header() {
-    echo -e "\n\n  \033[37m🚀    Welcome to \033[1;33mGitRocket\033[0;37m!    🚀$COLOR_NONE"
+    echo -e "\n\n  ${RED}🚀    Welcome ${ORANGE}to ${YELLOW}GitRocket${ORANGE}!    🚀$COLOR_NONE"
     echo -e "  ${PURPLE}---------------------------------$COLOR_NONE"
 }
 

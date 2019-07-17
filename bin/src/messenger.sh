@@ -86,12 +86,12 @@ function error()
 
 function step_error()
 {
-  echo -e "$COLOR_LIGHT_RED [✘] $COLOR_NONE"
+  echo -e "${COLOR_LIGHT_RED} [✘] $COLOR_NONE"
 }
 
 function step_wait()
 {
-  echo -e "$COLOR_DARK_ORANGE [↓] $COLOR_NONE"
+  echo -e "${COLOR_DARK_ORANGE} [↓] $COLOR_NONE"
 }
 
 ##################################################################
@@ -125,5 +125,5 @@ function success()
 
 function step_success()
 {
-  echo -e "$COLOR_LIGHT_GREEN [✔︎] $COLOR_NONE"
+  echo -e "${COLOR_LIGHT_GREEN} [✔︎] $COLOR_NONE"
 }
