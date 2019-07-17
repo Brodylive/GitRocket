@@ -171,7 +171,7 @@ function before_commit()
     }
     push || return 1
     # Relaunch the rocket... in test
-    rocket
+    rocket || return 1
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
     step_success
