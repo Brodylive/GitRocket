@@ -20,7 +20,7 @@ function version() {
 
 function help()
 {
-    echo -e "$COLOR_DARK_ORANGE  Version $ORANGE $VERSION $COLOR_NONE"
+    echo -e "\n$COLOR_DARK_ORANGE  Version $ORANGE $VERSION $COLOR_NONE"
 
     echo -e "\n  📙$ORANGE Usage      $WHITE GitRocket $GREEN<options> $CYAN[name]$COLOR_NONE\n"
     echo -e "\t$COLOR_GREEN_UNDERLINED  Options  $COLOR_NONE"
@@ -48,7 +48,7 @@ function help()
 # HEADER
 
 function header() {
-    echo -e "\n\n  ${RED}🚀    Welcome ${ORANGE}to ${YELLOW}GitRocket${ORANGE}!    🚀$COLOR_NONE"
-    echo -e "  ${PURPLE}---------------------------------$COLOR_NONE"
+    echo -e "\n\n  🚀      ${COLOR_LIGHT_RED}G i t ${YELLOW}R o c k e t      🚀$COLOR_NONE"
+    echo -e "  ${PURPLE}----------------------------------$COLOR_NONE"
 }
 
