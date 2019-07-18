@@ -110,10 +110,10 @@ function success()
       ;;
     # PULLED
     "$SUCCESS_PULL")
-      echo -e "\n  $COLOR_BLUE_ON_WHITE ✅  Everything is pulled, man! $COLOR_NONE"
+      echo -e "\n  $COLOR_BLACK_ON_WHITE ✅  Everything is pulled, man! $COLOR_NONE"
       ;;
     "$SUCCESS_CLONE")
-      echo -e "\n  $COLOR_BLUE_ON_WHITE ✅  The git repo is cloned! $COLOR_NONE"
+      echo -e "\n  $COLOR_BLACK_ON_WHITE ✅  The git repo is cloned! $COLOR_NONE"
       ;;
     "$SUCCESS_INIT")
       echo -e "\n  $COLOR_BLACK_ON_WHITE 🎉 It's the initiiiial commit! 🌸 $COLOR_NONE"
