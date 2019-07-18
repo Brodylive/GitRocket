@@ -172,6 +172,7 @@ function before_commit()
     push || return 1
     # Relaunch the rocket... in test
     rocket || return 1
+    return 1 # to stop execution
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
     step_success
