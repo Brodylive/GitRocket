@@ -164,14 +164,16 @@ function before_commit()
           ;;
       esac
     done
-    echo -e "\n"
+    echo -e "\n" 
     pull || {
         error ${ERROR_PULL}
         return 1
     }
     push || return 1
     # Relaunch the rocket... in test
-    rocket || return 1
+    if [[ -z $sync ]]; then
+      rocket || return 1
+    fi
     return 1 # to stop execution
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
@@ -428,7 +430,7 @@ function rocket()
 
 function sync()
 {
-    before_commit || return 1
+    before_commit 'sync' || return 1
     pull || return 1
     push || return 1
     return 0
