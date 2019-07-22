@@ -109,9 +109,11 @@ initCommit()
   if [[ ${git_init} =~ "set up to track remote branch" ]]; then
     success "${SUCCESS_INIT}"
     return 0
+  if [[ ${git_init} =~ "Your branch is up to date" ]]; then
+      error "${ERROR_ALREADY_INIT}"
   else
-      echo "\n $RED NEW INIT ERROR :: ${git_init} :: $COLOR_NONE"
-      error "$ERROR_INIT"
+      echo -e "\n $RED ERROR :\n ${git_init} $COLOR_NONE"
+      error "${ERROR_INIT}"
       return 1
   fi
 }
