@@ -105,16 +105,18 @@ clone()
 
 initCommit()
 {
+  # decompose git init
   git_init=$(touch README.md && git add README.md && git commit -m ":tada: Initial Commit with GitRocket :rocket:" && git push -u origin master)
   if [[ ${git_init} =~ "set up to track remote branch" ]]; then
     success "${SUCCESS_INIT}"
     return 0
-  if [[ ${git_init} =~ "Your branch is up to date" ]]; then
-      error "${ERROR_ALREADY_INIT}"
+  elif [[ ${git_init} =~ "Your branch is up to date" ]]; then
+    error "${ERROR_ALREADY_INIT}"
+    return 1
   else
-      echo -e "\n $RED ERROR :\n ${git_init} $COLOR_NONE"
-      error "${ERROR_INIT}"
-      return 1
+    echo -e "\n $RED ERROR :\n ${git_init} $COLOR_NONE"
+    error "${ERROR_INIT}"
+    return 1
   fi
 }
 
@@ -173,7 +175,7 @@ function before_commit()
     }
     push || return 1
     # Relaunch the rocket... in test
-    if [[ -z $sync ]]; then
+    if [[ -z "$1" ]]; then
       rocket || return 1
     fi
     return 1 # to stop execution
