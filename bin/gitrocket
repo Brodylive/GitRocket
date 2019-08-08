@@ -178,9 +178,10 @@ function before_commit()
     push || return 1
     # Relaunch the rocket... in test
     if [[ -z "$1" ]]; then
-      rocket || return 1
+      rocket
+      return 1
     fi
-    return 1 # to stop execution
+    return 0 # to stop execution
   elif [[ ${git_status} =~ "nothing to commit" ]]; then
     # ALL'S RIGHT
     step_success
@@ -512,7 +513,7 @@ GitRocket()
       ;;
     s)
       header
-      sync && success "$SUCCESS_PUSH"
+      sync && success "${SUCCESS_PUSH}"
       return 0
       ;;
     m)
