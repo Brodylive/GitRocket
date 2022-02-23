@@ -360,7 +360,7 @@ function pull()
   echo -en " $COLOR_LIGHT_GRAY Pull from remote $COLOR_NONE \t\t"
   git_pull=$(git pull --rebase 2>&1)
 
-  if [[ ${git_pull} =~ "is up to date" ]]; then
+  if [[ ${git_pull} =~ "up to date" ]]; then
     step_success
     return 0
   elif [[ ${git_pull} =~ "please commit or stash them" ]]; then
